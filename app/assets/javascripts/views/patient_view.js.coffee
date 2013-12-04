@@ -20,6 +20,7 @@ class Thorax.Views.PatientView extends Thorax.View
           @model.get('ethnicity').name
         else
           'None Provided'
+      # events: @model.get_events()
 
   # Helper function for date/time conversion
   format_time = (time) -> moment(time).format('DD MMM YYYY') if time
