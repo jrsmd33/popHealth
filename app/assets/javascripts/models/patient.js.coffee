@@ -6,9 +6,10 @@ class Thorax.Models.Patient extends Thorax.Model
     attrs.entries = new Thorax.Collections.Entries
     attrs.entries.comparator = (e) ->  -1 * e.get('start_time')
     for type in ['allergies', 'conditions', 'encounters', 'immunizations', 
-      'lab_results', 'medications', 'procedures', 'vital_signs']
-      for entry in attrs[type]
-        attrs.entries.add entry, type: type
+      'results', 'medications', 'procedures', 'vital_signs']
+      if attrs[type]?
+        for entry in attrs[type] 
+          attrs.entries.add entry, type: type
     attrs
 
 class Thorax.Collections.Entries extends Thorax.Collection
@@ -22,8 +23,8 @@ class Thorax.Collections.Entries extends Thorax.Collection
         new Thorax.Models.Encounter attrs
       when 'immunizations'
         new Thorax.Models.Immunization attrs
-      when ' lab_results'
-        new Thorax.Models.LabResult attrs
+      when 'results'
+        new Thorax.Models.Result attrs
       when 'medications'
         new Thorax.Models.Medication attrs
       when 'procedures'
@@ -55,8 +56,8 @@ class Thorax.Models.Immunization extends Thorax.Model
   entryType: -> 'immunization'
   displayFields: -> ['seriesNumber', 'medication_product']
 
-class Thorax.Models.LabResult extends Thorax.Model
-  entryType: -> 'lab_result'
+class Thorax.Models.Result extends Thorax.Model
+  entryType: -> 'result'
   displayFields: -> ['type', 'interpretation']
 
 class Thorax.Models.Medication extends Thorax.Model

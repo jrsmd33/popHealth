@@ -1,6 +1,5 @@
 class Thorax.Views.PatientView extends Thorax.View
   template: JST['patients/show']
-
   context: ->
     _(super).extend
       effective_time: format_time @model.get('effective_time')
@@ -30,14 +29,7 @@ class Thorax.Views.EntryView extends Thorax.View
     _(super).extend
       start_time: format_time @model.get('start_time')
       end_time: '- ' + format_time @model.get('end_time') if @model.get('end_time')?
-      # event_type:
-      #   code = @model.get('codes')
-      #   if(code == 'CPT')
-      #     'Encounter'
-      #   else if(code == 'ICD-9-CM')
-      #     'Condition'
-      #   else if(code == 'LOINC')
-      #     'Results'
-
+      entry_type: @model.entryType()
+      
   # Helper function for date/time conversion
   format_time = (time) -> moment(time).format('MM-DD-YYYY') if time
